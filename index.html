@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASH FIT - Tu Estilo de Vida Saludable</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 50%, #2e7d32 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .logo svg {
+            width: 70px;
+            height: 70px;
+        }
+
+        .hero-section {
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            letter-spacing: 1px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Galería de alimentos dinámica */
+        .food-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            max-width: 500px;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .food-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .food-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(76,175,80,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .food-item:hover::before {
+            left: 100%;
+        }
+
+        .food-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid #4CAF50;
+            position: relative;
+        }
+
+        /* Imágenes de alimentos usando CSS */
+        .avocado {
+            background: radial-gradient(circle at 30% 30%, #90EE90, #228B22);
+            position: relative;
+        }
+        .avocado::after {
+            content: '🥑';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .protein-bar {
+            background: linear-gradient(45deg, #8B4513, #D2691E);
+            position: relative;
+        }
+        .protein-bar::after {
+            content: '🍫';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .smoothie {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            position: relative;
+        }
+        .smoothie::after {
+            content: '🥤';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .nuts {
+            background: linear-gradient(45deg, #DEB887, #8B7355);
+            position: relative;
+        }
+        .nuts::after {
+            content: '🥜';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .quinoa {
+            background: linear-gradient(45deg, #F5DEB3, #D2B48C);
+            position: relative;
+        }
+        .quinoa::after {
+            content: '🌾';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .salad {
+            background: linear-gradient(45deg, #98FB98, #00FF7F);
+            position: relative;
+        }
+        .salad::after {
+            content: '🥗';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
+        .food-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #2e7d32;
+            margin-bottom: 0.2rem;
+        }
+
+        .food-benefit {
+            font-size: 0.7rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Sección de fitness */
+        .fitness-section {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .fitness-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .fitness-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .fitness-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .fitness-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .fitness-desc {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Botones de acción */
+        .cta-section {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-cta {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+            margin: 0.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .main-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255,107,53,0.4);
+            animation: none;
+        }
+
+        .secondary-cta {
+            background: rgba(255,255,255,0.9);
+            color: #2e7d32;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border: 2px solid rgba(46,125,50,0.3);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .secondary-cta:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Elementos flotantes animados */
+        .floating-food {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: floatFood 8s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .floating-food:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+        .floating-food:nth-child(2) { top: 20%; right: 10%; animation-delay: 2s; }
+        .floating-food:nth-child(3) { bottom: 30%; left: 10%; animation-delay: 4s; }
+        .floating-food:nth-child(4) { bottom: 20%; right: 5%; animation-delay: 6s; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes floatFood {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            25% { transform: translateY(-30px) rotate(90deg); opacity: 0.4; }
+            50% { transform: translateY(0) rotate(180deg); opacity: 0.3; }
+            75% { transform: translateY(-15px) rotate(270deg); opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .food-gallery { grid-template-columns: repeat(3, 1fr); max-width: 350px; }
+            .fitness-section { gap: 1rem; }
+            .fitness-card { padding: 1rem; }
+            .main-cta, .secondary-cta { width: 90%; margin: 0.5rem auto; display: block; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Elementos flotantes -->
+    <div class="floating-food">🍎</div>
+    <div class="floating-food">🥑</div>
+    <div class="floating-food">💪</div>
+    <div class="floating-food">🏃‍♀️</div>
+
+    <div class="main-container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Cuerpo principal de la manzana -->
+                    <path d="M25 35 Q25 20 40 20 Q50 15 60 20 Q75 20 75 35 Q80 45 80 60 Q80 80 50 85 Q20 80 20 60 Q20 45 25 35 Z" fill="#4CAF50"/>
+                    
+                    <!-- Hoja superior -->
+                    <path d="M52 18 Q58 12 65 15 Q68 18 65 22 Q60 20 55 22 Q52 20 52 18 Z" fill="#2E7D32"/>
+                    
+                    <!-- Figura humana en movimiento (corriendo) -->
+                    <!-- Cabeza -->
+                    <circle cx="45" cy="40" r="6" fill="white"/>
+                    
+                    <!-- Cuerpo -->
+                    <path d="M45 46 L45 65" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                    
+                    <!-- Brazos en movimiento -->
+                    <path d="M45 52 L35 48" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M45 52 L55 56" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    
+                    <!-- Piernas en movimiento de carrera -->
+                    <path d="M45 65 L38 75" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M45 65 L52 78" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    
+                    <!-- Pies -->
+                    <circle cx="36" cy="76" r="2" fill="white"/>
+                    <circle cx="54" cy="79" r="2" fill="white"/>
+                    
+                    <!-- Efecto de movimiento -->
+                    <path d="M28 50 Q32 48 35 50 Q32 52 28 50" fill="rgba(255,255,255,0.4)"/>
+                    <path d="M30 58 Q34 56 37 58 Q34 60 30 58" fill="rgba(255,255,255,0.4)"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Hero -->
+        <div class="hero-section">
+            <h1 class="hero-title">NASH FIT</h1>
+            <p class="hero-subtitle">¡Juntos en lo que te hace bien! 🌱</p>
+        </div>
+
+        <!-- Galería visual de alimentos -->
+        <div class="food-gallery">
+            <div class="food-item" onclick="selectFood('avocado')">
+                <div class="food-image avocado"></div>
+                <div class="food-name">Palta</div>
+                <div class="food-benefit">Grasas saludables</div>
+            </div>
+            
+            <div class="food-item" onclick="selectFood('protein')">
+                <div class="food-image protein-bar"></div>
+                <div class="food-name">Proteína</div>
+                <div class="food-benefit">Músculo fuerte</div>
+            </div>
+            
+            <div class="food-item" onclick="selectFood('smoothie')">
+                <div class="food-image smoothie"></div>
+                <div class="food-name">Smoothies</div>
+                <div class="food-benefit">Energía natural</div>
+            </div>
+            
+            <div class="food-item" onclick="selectFood('nuts')">
+                <div class="food-image nuts"></div>
+                <div class="food-name">Frutos Secos</div>
+                <div class="food-benefit">Snack perfecto</div>
+            </div>
+            
+            <div class="food-item" onclick="selectFood('quinoa')">
+                <div class="food-image quinoa"></div>
+                <div class="food-name">Quinua</div>
+                <div class="food-benefit">Superfood peruano</div>
+            </div>
+            
+            <div class="food-item" onclick="selectFood('salad')">
+                <div class="food-image salad"></div>
+                <div class="food-name">Ensaladas</div>
+                <div class="food-benefit">Vitaminas puras</div>
+            </div>
+        </div>
+
+        <!-- Sección fitness -->
+        <div class="fitness-section">
+            <div class="fitness-card">
+                <span class="fitness-icon">🏋️‍♀️</span>
+                <div class="fitness-title">Fitness</div>
+                <div class="fitness-desc">Fuerza & Resistencia</div>
+            </div>
+            
+            <div class="fitness-card">
+                <span class="fitness-icon">🏃‍♂️</span>
+                <div class="fitness-title">Running</div>
+                <div class="fitness-desc">Cardio & Velocidad</div>
+            </div>
+            
+            <div class="fitness-card">
+                <span class="fitness-icon">🧘‍♀️</span>
+                <div class="fitness-title">Yoga</div>
+                <div class="fitness-desc">Flexibilidad & Paz</div>
+            </div>
+        </div>
+
+        <!-- CTAs -->
+        <div class="cta-section">
+            <a href="https://nashfitpe.com" class="main-cta" target="_blank">
+                🚀 ¡Únete Ahora!
+            </a>
+            <a href="#" class="secondary-cta" onclick="showMoreInfo()">
+                📋 Conócenos
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal informativo -->
+    <div id="infoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 500px; text-align: center; position: relative; margin: 1rem;">
+            <button onclick="closeModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">✕</button>
+            
+            <div style="margin-bottom: 1.5rem;">
+                <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 75 Q20 20 50 20 Q80 20 80 75 Q80 85 70 85 L30 85 Q20 85 20 75 Z" fill="#4CAF50"/>
+                    <path d="M25 25 Q25 15 35 15 Q45 15 45 25 L45 70 Q45 75 40 75 Q35 75 35 70 L35 40 L30 40 Q25 40 25 35 Q25 30 30 30 L35 30 L35 25 Z" fill="white"/>
+                    <circle cx="65" cy="40" r="8" fill="white"/>
+                </svg>
+            </div>
+            
+            <h2 style="color: #2e7d32; margin-bottom: 1rem; font-size: 1.5rem;">Nash Fit</h2>
+            <p style="color: #666; line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.95rem;">
+                La primera SuperApp de bienestar en Perú. Integramos alimentos saludables, 
+                superfoods peruanos y ropa deportiva en una sola plataforma.
+            </p>
+            
+            <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                <div style="display: flex; justify-content: space-around; text-align: center;">
+                    <div>
+                        <strong style="color: #4CAF50; font-size: 1.2rem;">18-34</strong>
+                        <p style="font-size: 0.8rem; color: #666;">Años Target</p>
+                    </div>
+                    <div>
+                        <strong style="color: #4CAF50; font-size: 1.2rem;">Lima</strong>
+                        <p style="font-size: 0.8rem; color: #666;">Cobertura</p>
+                    </div>
+                    <div>
+                        <strong style="color: #4CAF50; font-size: 1.2rem;">24/7</strong>
+                        <p style="font-size: 0.8rem; color: #666;">Disponible</p>
+                    </div>
+                </div>
+            </div>
+            
+            <a href="https://nashfitpe.com" target="_blank" style="background: #4CAF50; color: white; padding: 0.8rem 2rem; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                Visitar Nash Fit PE →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function selectFood(foodType) {
+            // Efecto visual al seleccionar alimento
+            const foods = document.querySelectorAll('.food-item');
+            foods.forEach(item => item.style.transform = 'scale(0.95)');
+            
+            setTimeout(() => {
+                foods.forEach(item => item.style.transform = 'scale(1)');
+            }, 150);
+            
+            // Aquí podrías agregar más interactividad
+            console.log('Seleccionado: ' + foodType);
+        }
+
+        function showMoreInfo() {
+            document.getElementById('infoModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('infoModal').style.display = 'none';
+        }
+
+        // Cerrar modal con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Cerrar modal haciendo clic fuera
+        document.getElementById('infoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
